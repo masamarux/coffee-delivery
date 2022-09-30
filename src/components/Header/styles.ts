@@ -6,6 +6,12 @@ export const HeaderContainer = styled.header`
   justify-content: space-between;
   padding: 2rem 0;
 
+  & > button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+
   div {
     display: flex;
     align-items: center;
