@@ -81,30 +81,5 @@ export const FooterButtonsContainer = styled.footer`
     align-items: center;
     flex-direction: row;
     gap: 0.5rem;
-
-    div {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
-      background-color: ${(props) => props.theme['gray-400']};
-      padding: 0.5rem;
-      border-radius: 6px;
-      gap: 0.25rem;
-
-      span {
-        width: 20px;
-      }
-
-      button {
-        background-color: transparent;
-        border: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        svg {
-          color: ${(props) => props.theme['purple-500']};
-        }
-      }
-    }
   }
 `

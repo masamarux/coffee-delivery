@@ -1,7 +1,7 @@
-import { ShoppingCart, Plus, Minus } from 'phosphor-react'
-import { useState } from 'react'
+import { ShoppingCart } from 'phosphor-react'
 
 import { Button } from '../../../../components/Button'
+import { SelectQuantity } from '../SelectQuantity'
 import {
   CoffeeItemContainer,
   BadgesContainer,
@@ -28,16 +28,6 @@ export function CoffeeItem({
   price,
   badges,
 }: CoffeeItemProps) {
-  const [quantity, setQuantity] = useState(0)
-
-  function handleIncrement() {
-    setQuantity((prevState) => prevState + 1)
-  }
-  function handleDecrement() {
-    if (quantity > 0) {
-      setQuantity((prevState) => prevState - 1)
-    }
-  }
   return (
     <CoffeeItemContainer>
       <img src={imgSrc} alt={alt} />
@@ -61,15 +51,7 @@ export function CoffeeItem({
             {price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
           </span>
           <div>
-            <div>
-              <button onClick={handleDecrement}>
-                <Minus size={14} weight="bold" />
-              </button>
-              <span>{quantity}</span>
-              <button onClick={handleIncrement}>
-                <Plus size={14} weight="bold" />
-              </button>
-            </div>
+            <SelectQuantity />
             <Button variant="primary-dark">
               <ShoppingCart weight="fill" size={22} />
             </Button>

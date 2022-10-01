@@ -7,6 +7,9 @@ import {
 } from 'phosphor-react'
 
 import { Input } from './components/Input'
+import { Button } from '../../components/Button'
+import { FormHeader } from './components/FormHeader'
+import { CoffeeSelectedItem } from './components/CoffeeSelectedItem'
 
 import {
   CheckoutFormContainer,
@@ -16,14 +19,22 @@ import {
   ToggleGroupRoot,
   ToggleGroupItem,
   InputsContainer,
+  FormTitle,
+  ItemValuesContainer,
+  ItemTotalContainer,
+  ButtonConfirmContainer,
+  Hr,
 } from './styles'
-import { FormHeader } from './components/FormHeader'
+
+import coffeeImg from '../../assets/coffee/arabe.png'
+import { useState } from 'react'
 
 export function Checkout() {
+  const [test, setTest] = useState('')
   return (
     <CheckoutFormContainer>
       <div>
-        <label>Complete seu pedido</label>
+        <FormTitle>Complete seu pedido</FormTitle>
         <FormAddressContainer>
           <FormHeader
             iconColorVariant="yellow"
@@ -32,16 +43,42 @@ export function Checkout() {
             description="Informe o endereço onde deseja receber seu pedido"
           />
           <InputsContainer>
-            <Input type="text" placeholder="CEP" required />
-            <Input type="text" placeholder="Rua" required />
+            <Input inputSize="12.5rem" type="text" placeholder="CEP" required />
+            <Input inputSize="100%" type="text" placeholder="Rua" required />
             <div>
-              <Input type="text" placeholder="Número" required />
-              <Input type="text" placeholder="Complemento" required />
+              <Input
+                inputSize="12.5rem"
+                type="text"
+                placeholder="Número"
+                required
+              />
+              <Input
+                value={test}
+                onChange={(e) => setTest(e.target.value)}
+                inputSize="21.75rem"
+                type="text"
+                placeholder="Complemento"
+              />
             </div>
             <div>
-              <Input type="text" placeholder="Bairro" required />
-              <Input type="text" placeholder="Cidade" required />
-              <Input type="text" placeholder="UF" required />
+              <Input
+                inputSize="12.5rem"
+                type="text"
+                placeholder="Bairro"
+                required
+              />
+              <Input
+                inputSize="17.25rem"
+                type="text"
+                placeholder="Cidade"
+                required
+              />
+              <Input
+                inputSize="3.75rem"
+                type="text"
+                placeholder="UF"
+                required
+              />
             </div>
           </InputsContainer>
         </FormAddressContainer>
@@ -67,8 +104,44 @@ export function Checkout() {
           </ToggleGroupRoot>
         </FormPaymentContainer>
       </div>
-      <label>Cafés selecionados</label>
-      <CoffeeSelectedItemsContainer></CoffeeSelectedItemsContainer>
+      <div>
+        <FormTitle>Cafés selecionados</FormTitle>
+        <CoffeeSelectedItemsContainer>
+          <CoffeeSelectedItem
+            imgSrc={coffeeImg}
+            title="Árabe"
+            price={9.9}
+            alt="Um café"
+          />
+
+          <Hr decorative orientation="horizontal" />
+          <CoffeeSelectedItem
+            imgSrc={coffeeImg}
+            title="Árabe"
+            price={9.9}
+            alt="Um café"
+          />
+
+          <Hr decorative orientation="horizontal" />
+
+          <div>
+            <ItemValuesContainer>
+              Total de itens <span>R$ 29,70</span>
+            </ItemValuesContainer>
+            <ItemValuesContainer>
+              Entrega <span>R$ 3,50</span>
+            </ItemValuesContainer>
+            <ItemTotalContainer>
+              <span>Total</span> <span>R$ 33,20</span>
+            </ItemTotalContainer>
+            <ButtonConfirmContainer>
+              <Button type="submit" variant="secondary-dark">
+                Finalizar Pedido
+              </Button>
+            </ButtonConfirmContainer>
+          </div>
+        </CoffeeSelectedItemsContainer>
+      </div>
     </CheckoutFormContainer>
   )
 }

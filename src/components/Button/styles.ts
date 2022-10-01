@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 const BUTTON_VARIANT = {
   'primary-dark': ['purple-500', 'gray-200', 'purple-400', 'gray-200'],
   'primary-light': ['purple-300', 'white', 'white', 'white'],
-  'secondary-dark': ['yellow-400', 'white', 'white', 'white'],
+  'secondary-dark': ['yellow-400', 'white', 'yellow-500', 'white'],
   'secondary-light': ['yellow-300', 'yellow-500', 'yellow-400', 'yellow-300'],
   gray: ['gray-400', 'gray-700', 'gray-500', 'gray-800'],
 } as const

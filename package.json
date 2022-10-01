@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@radix-ui/react-separator": "^1.0.0",
     "@radix-ui/react-toggle-group": "^1.0.0",
     "phosphor-react": "^1.4.1",
     "polished": "^4.2.2",
