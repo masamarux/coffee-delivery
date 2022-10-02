@@ -2,11 +2,19 @@ import { ShoppingCart, MapPin } from 'phosphor-react'
 
 import { Button } from '../Button'
 
-import { HeaderContainer, LocationContainer } from './styles'
+import {
+  HeaderContainer,
+  LocationContainer,
+  CartQuantity,
+  ButtonContainer,
+} from './styles'
 import logoImg from '../../assets/logo-img.svg'
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { CoffeeContext } from '../../contexts/CoffeeContext'
 
 export function Header() {
+  const { coffeeItemsCart } = useContext(CoffeeContext)
   const navigate = useNavigate()
 
   function handleNavigateToCheckout() {
@@ -32,9 +40,15 @@ export function Header() {
           Marechal Deodoro, AL
         </LocationContainer>
 
-        <Button variant="secondary-light" onClick={handleNavigateToCheckout}>
-          <ShoppingCart size={24} weight="fill" />
-        </Button>
+        <ButtonContainer>
+          <Button variant="secondary-light" onClick={handleNavigateToCheckout}>
+            {coffeeItemsCart && coffeeItemsCart.length > 0 && (
+              <CartQuantity>{coffeeItemsCart.length}</CartQuantity>
+            )}
+
+            <ShoppingCart size={24} weight="fill" />
+          </Button>
+        </ButtonContainer>
       </div>
     </HeaderContainer>
   )

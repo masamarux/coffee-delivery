@@ -6,7 +6,6 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export function Input({ inputSize, required, value, ...rest }: InputProps) {
-  console.log(value)
   return (
     <InputContainer
       inputSize={inputSize}

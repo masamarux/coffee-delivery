@@ -34,3 +34,24 @@ export const LocationContainer = styled.span`
     color: ${(props) => props.theme['purple-400']};
   }
 `
+
+export const ButtonContainer = styled.div`
+  position: relative;
+`
+
+export const CartQuantity = styled.div`
+  position: absolute;
+  right: -0.5rem;
+  top: -0.5rem;
+  color: ${(props) => props.theme.white};
+  background-color: ${(props) => props.theme['yellow-500']};
+  border-radius: 50%;
+  line-height: 0;
+  height: 1.25rem;
+  width: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+`

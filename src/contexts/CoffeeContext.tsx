@@ -1,18 +1,22 @@
-import { createContext, ReactNode, useReducer, useState } from 'react'
+import { createContext, ReactNode, useEffect, useReducer } from 'react'
+import { v4 as uuid } from 'uuid'
 
-interface CoffeeItem {
-  imgSrc: string
-  alt: string
-  title: string
-  description: string
-  price: number
-  badges: string[]
-  quantity: number
-}
+import { coffees } from '../data/coffees'
+import {
+  addCoffeeItemToCartAction,
+  decrementCoffeeItemQuantityAction,
+  incrementCoffeeItemQuantityAction,
+  removeCoffeeItemFromCartAction,
+} from '../reducers/coffee/actions'
+import { CoffeeItem, coffeesReducer } from '../reducers/coffee/reducer'
 
 interface CoffeeContextType {
   coffeeItems: CoffeeItem[]
-  coffeeItemsCart: CoffeeItem[]
+  coffeeItemsCart: CoffeeItem[] | null
+  addCoffeeItemToCart: (coffeeItem: CoffeeItem) => void
+  removeCoffeeItemFromCart: (coffeeItem: CoffeeItem) => void
+  incrementCoffeeItemQuantity: (coffeeId: string) => void
+  decrementCoffeeItemQuantity: (coffeeId: string) => void
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType)
@@ -24,24 +28,71 @@ interface CoffeeContextProviderProps {
 export function CoffeeContextProvider({
   children,
 }: CoffeeContextProviderProps) {
-  const [coffeeItems, dispatch] = useReducer(
-    (state: CoffeeItem[], action: any) => {
-      return state
+  const [coffeeState, dispatch] = useReducer(
+    coffeesReducer,
+    {
+      coffeeItems: coffees
+        ? coffees.map((coffee) => ({
+            id: uuid(),
+            ...coffee,
+          }))
+        : [],
+      coffeeItemsCart: [],
     },
-    [],
+    () => {
+      const storedCoffees = localStorage.getItem(
+        import.meta.env.VITE_LOCAL_STORAGE_NAME,
+      )
+
+      if (storedCoffees) {
+        return JSON.parse(storedCoffees)
+      }
+
+      return {
+        coffeeItems: coffees
+          ? coffees.map((coffee) => ({
+              id: uuid(),
+              ...coffee,
+            }))
+          : [],
+        coffeeItemsCart: [],
+      }
+    },
   )
 
-  const coffeeItemsCart: CoffeeItem[] = coffeeItems.filter(
-    (coffeeItem) => coffeeItem.quantity > 0,
-  )
+  const { coffeeItems, coffeeItemsCart } = coffeeState
 
-  // function increaseCoffeeQuantity
+  function addCoffeeItemToCart(coffeeItem: CoffeeItem) {
+    dispatch(addCoffeeItemToCartAction(coffeeItem))
+  }
+
+  function removeCoffeeItemFromCart(coffeeItem: CoffeeItem) {
+    dispatch(removeCoffeeItemFromCartAction(coffeeItem))
+  }
+
+  function incrementCoffeeItemQuantity(coffeeId: string) {
+    dispatch(incrementCoffeeItemQuantityAction(coffeeId))
+  }
+
+  function decrementCoffeeItemQuantity(coffeeId: string) {
+    dispatch(decrementCoffeeItemQuantityAction(coffeeId))
+  }
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(coffeeState)
+
+    localStorage.setItem(import.meta.env.VITE_LOCAL_STORAGE_NAME, stateJSON)
+  }, [coffeeState])
 
   return (
     <CoffeeContext.Provider
       value={{
         coffeeItems,
         coffeeItemsCart,
+        addCoffeeItemToCart,
+        removeCoffeeItemFromCart,
+        incrementCoffeeItemQuantity,
+        decrementCoffeeItemQuantity,
       }}
     >
       {children}

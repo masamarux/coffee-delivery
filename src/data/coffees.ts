@@ -13,13 +13,23 @@ import havaianoImg from '../assets/coffee/havaiano.png'
 import arabeImg from '../assets/coffee/arabe.png'
 import irlandesImg from '../assets/coffee/irlandes.png'
 
-export const coffees = [
+interface CoffeeItem {
+  imgSrc: string
+  alt: string
+  title: string
+  description: string
+  price: number
+  badges: string[]
+  quantity: number
+}
+
+export const coffees: CoffeeItem[] = [
   {
     imgSrc: expressoTradImg,
     alt: 'Foto de um café expresso tradicional visto de cima',
     title: 'Expresso Tradicional',
     description: 'O tradicional café feito com água quente e grãos moídos',
-    price: 5,
+    price: 3.99,
     badges: ['Tradicional', 'Rápido'],
     quantity: 0,
   },
@@ -28,7 +38,7 @@ export const coffees = [
     alt: 'Foto de um café expresso americano visto de cima',
     title: 'Expresso Americano',
     description: 'Expresso diluído, menos intenso que o tradicional',
-    price: 5,
+    price: 4.15,
     badges: ['Tradicional', 'Diluído'],
     quantity: 0,
   },

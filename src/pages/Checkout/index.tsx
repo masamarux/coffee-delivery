@@ -26,11 +26,20 @@ import {
   Hr,
 } from './styles'
 
-import coffeeImg from '../../assets/coffee/arabe.png'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { CoffeeContext } from '../../contexts/CoffeeContext'
 
 export function Checkout() {
+  const { coffeeItemsCart } = useContext(CoffeeContext)
   const [test, setTest] = useState('')
+
+  const totalPriceCoffeeItemsCart = coffeeItemsCart
+    ? coffeeItemsCart.reduce((acc, coffeeItemCart) => {
+        return acc + coffeeItemCart.price * coffeeItemCart.quantity
+      }, 0)
+    : 0
+  const fretePrice = 3.5
+
   return (
     <CheckoutFormContainer>
       <div>
@@ -107,32 +116,45 @@ export function Checkout() {
       <div>
         <FormTitle>Cafés selecionados</FormTitle>
         <CoffeeSelectedItemsContainer>
-          <CoffeeSelectedItem
-            imgSrc={coffeeImg}
-            title="Árabe"
-            price={9.9}
-            alt="Um café"
-          />
+          {coffeeItemsCart &&
+            coffeeItemsCart.map((coffeeItem) => (
+              <div key={coffeeItem.id}>
+                <CoffeeSelectedItem item={coffeeItem} />
 
-          <Hr decorative orientation="horizontal" />
-          <CoffeeSelectedItem
-            imgSrc={coffeeImg}
-            title="Árabe"
-            price={9.9}
-            alt="Um café"
-          />
-
-          <Hr decorative orientation="horizontal" />
+                <Hr decorative orientation="horizontal" />
+              </div>
+            ))}
 
           <div>
             <ItemValuesContainer>
-              Total de itens <span>R$ 29,70</span>
+              Total de itens{' '}
+              <span>
+                R${' '}
+                {totalPriceCoffeeItemsCart.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                })}
+              </span>
             </ItemValuesContainer>
             <ItemValuesContainer>
-              Entrega <span>R$ 3,50</span>
+              Entrega{' '}
+              <span>
+                R${' '}
+                {fretePrice.toLocaleString('pt-BR', {
+                  minimumFractionDigits: 2,
+                })}
+              </span>
             </ItemValuesContainer>
             <ItemTotalContainer>
-              <span>Total</span> <span>R$ 33,20</span>
+              <span>Total</span>{' '}
+              <span>
+                R${' '}
+                {(totalPriceCoffeeItemsCart + fretePrice).toLocaleString(
+                  'pt-BR',
+                  {
+                    minimumFractionDigits: 2,
+                  },
+                )}
+              </span>
             </ItemTotalContainer>
             <ButtonConfirmContainer>
               <Button type="submit" variant="secondary-dark">

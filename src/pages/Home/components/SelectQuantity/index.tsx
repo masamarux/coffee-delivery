@@ -2,24 +2,24 @@ import { Minus, Plus } from 'phosphor-react'
 import { useState } from 'react'
 import { SelectQuantityContainer } from './styles'
 
-export function SelectQuantity() {
-  const [quantity, setQuantity] = useState(0)
+interface SelectQuantityProps {
+  quantity: number
+  handleIncrement: () => void
+  handleDecrement: () => void
+}
 
-  function handleIncrement() {
-    setQuantity((prevState) => prevState + 1)
-  }
-  function handleDecrement() {
-    if (quantity > 0) {
-      setQuantity((prevState) => prevState - 1)
-    }
-  }
+export function SelectQuantity({
+  handleIncrement,
+  handleDecrement,
+  quantity,
+}: SelectQuantityProps) {
   return (
     <SelectQuantityContainer>
-      <button onClick={handleDecrement}>
+      <button type="button" onClick={handleDecrement}>
         <Minus size={14} weight="bold" />
       </button>
       <span>{quantity}</span>
-      <button onClick={handleIncrement}>
+      <button type="button" onClick={handleIncrement}>
         <Plus size={14} weight="bold" />
       </button>
     </SelectQuantityContainer>

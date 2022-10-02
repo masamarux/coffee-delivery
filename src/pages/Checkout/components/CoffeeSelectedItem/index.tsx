@@ -1,21 +1,37 @@
 import { Trash } from 'phosphor-react'
+import { useContext, useState } from 'react'
+
 import { Button } from '../../../../components/Button'
 import { SelectQuantity } from '../../../Home/components/SelectQuantity'
+import { CoffeeContext } from '../../../../contexts/CoffeeContext'
+import { CoffeeItem as CoffeeItemInterface } from '../../../../reducers/coffee/reducer'
+
 import { CoffeeSelectedItemContainer, CoffeeSelectedItemLeft } from './styles'
 
 interface CoffeeSelectedItemProps {
-  imgSrc: string
-  title: string
-  price: number
-  alt: string
+  item: CoffeeItemInterface
 }
 
-export function CoffeeSelectedItem({
-  imgSrc,
-  alt,
-  title,
-  price,
-}: CoffeeSelectedItemProps) {
+export function CoffeeSelectedItem({ item }: CoffeeSelectedItemProps) {
+  const {
+    removeCoffeeItemFromCart,
+    incrementCoffeeItemQuantity,
+    decrementCoffeeItemQuantity,
+  } = useContext(CoffeeContext)
+  const { title, price, alt, imgSrc, quantity } = item
+
+  function handleIncrement() {
+    incrementCoffeeItemQuantity(item.id)
+  }
+
+  function handleDecrement() {
+    decrementCoffeeItemQuantity(item.id)
+  }
+
+  function handleRemoveItemFromCart() {
+    removeCoffeeItemFromCart(item)
+  }
+
   return (
     <CoffeeSelectedItemContainer>
       <CoffeeSelectedItemLeft>
@@ -23,8 +39,17 @@ export function CoffeeSelectedItem({
         <div>
           <span>{title}</span>
           <div>
-            <SelectQuantity />
-            <Button variant="gray" hasPurpleIcon>
+            <SelectQuantity
+              quantity={quantity}
+              handleIncrement={handleIncrement}
+              handleDecrement={handleDecrement}
+            />
+            <Button
+              type="button"
+              variant="gray"
+              hasPurpleIcon
+              onClick={handleRemoveItemFromCart}
+            >
               <Trash size={16} />
               Remover
             </Button>
@@ -33,7 +58,11 @@ export function CoffeeSelectedItem({
       </CoffeeSelectedItemLeft>
 
       <span>
-        R$ {price.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+        R${' '}
+        {price &&
+          (price * quantity).toLocaleString('pt-BR', {
+            minimumFractionDigits: 2,
+          })}
       </span>
     </CoffeeSelectedItemContainer>
   )
