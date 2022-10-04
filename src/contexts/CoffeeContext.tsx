@@ -7,6 +7,7 @@ import {
   decrementCoffeeItemQuantityAction,
   incrementCoffeeItemQuantityAction,
   removeCoffeeItemFromCartAction,
+  removeAllCoffeeItemFromCartAction,
 } from '../reducers/coffee/actions'
 import { CoffeeItem, coffeesReducer } from '../reducers/coffee/reducer'
 
@@ -17,6 +18,7 @@ interface CoffeeContextType {
   removeCoffeeItemFromCart: (coffeeItem: CoffeeItem) => void
   incrementCoffeeItemQuantity: (coffeeId: string) => void
   decrementCoffeeItemQuantity: (coffeeId: string) => void
+  removeAllCoffeeItemFromCart: () => void
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType)
@@ -70,6 +72,10 @@ export function CoffeeContextProvider({
     dispatch(removeCoffeeItemFromCartAction(coffeeItem))
   }
 
+  function removeAllCoffeeItemFromCart() {
+    dispatch(removeAllCoffeeItemFromCartAction())
+  }
+
   function incrementCoffeeItemQuantity(coffeeId: string) {
     dispatch(incrementCoffeeItemQuantityAction(coffeeId))
   }
@@ -93,6 +99,7 @@ export function CoffeeContextProvider({
         removeCoffeeItemFromCart,
         incrementCoffeeItemQuantity,
         decrementCoffeeItemQuantity,
+        removeAllCoffeeItemFromCart,
       }}
     >
       {children}

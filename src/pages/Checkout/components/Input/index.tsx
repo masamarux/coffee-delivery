@@ -1,18 +1,28 @@
-import { InputHTMLAttributes } from 'react'
+import React, { InputHTMLAttributes } from 'react'
 import { InputContainer } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   inputSize: string
+  hasValue?: boolean
+  hasErrors?: boolean
 }
 
-export function Input({ inputSize, required, value, ...rest }: InputProps) {
+export type Ref = HTMLInputElement
+
+export const Input = React.forwardRef<Ref, InputProps>(function Input(
+  props,
+  ref,
+) {
+  const { inputSize, required, hasValue, hasErrors, ...rest } = props
+
   return (
     <InputContainer
       inputSize={inputSize}
       optional={!required}
-      data-domain={!value ? 'Opcional' : ''}
+      hasErrors={hasErrors}
+      data-domain={!hasValue ? 'Opcional' : ''}
     >
-      <input {...rest} />
+      <input ref={ref} {...rest} />
     </InputContainer>
   )
-}
+})

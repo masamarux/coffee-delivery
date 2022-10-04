@@ -4,6 +4,7 @@ interface InputContainerProps {
   inputSize: string
   optional?: boolean
   hasValue?: boolean
+  hasErrors?: boolean
 }
 
 export const InputContainer = styled.label<InputContainerProps>`
@@ -19,7 +20,10 @@ export const InputContainer = styled.label<InputContainerProps>`
     width: ${(props) => props.inputSize};
     padding: 0.75rem;
     background-color: ${(props) => props.theme['gray-300']};
-    border: 1px solid ${(props) => props.theme['gray-400']};
+
+    border: 1px solid
+      ${(props) =>
+        props.hasErrors ? props.theme['red-400'] : props.theme['gray-400']};
     border-radius: 4px;
     color: ${(props) => props.theme['gray-700']};
 

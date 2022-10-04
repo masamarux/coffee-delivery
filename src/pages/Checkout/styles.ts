@@ -79,7 +79,7 @@ export const ToggleGroupItem = styled(ToggleGroup.Item)`
   line-height: 1.6;
   font-weight: 400;
 
-  padding: 1rem;
+  padding: 1rem 0.875rem;
   border-radius: 8px;
   background-color: ${(props) => props.theme['gray-400']};
   color: ${(props) => props.theme['gray-700']};

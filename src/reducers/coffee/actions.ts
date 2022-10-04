@@ -5,6 +5,7 @@ export enum ActionTypes {
   REMOVE_COFFEE_FROM_CART = 'REMOVE_COFFEE_FROM_CART',
   INCREMENT_COFFEE_QUANTITY = 'INCREMENT_COFFEE_QUANTITY',
   DECREMENT_COFFEE_QUANTITY = 'DECREMENT_COFFEE_QUANTITY',
+  REMOVE_ALL_COFFEE_FROM_CART = 'REMOVE_ALL_COFFEE_FROM_CART',
 }
 
 export function addCoffeeItemToCartAction(coffeeItem: CoffeeItem) {
@@ -40,5 +41,11 @@ export function decrementCoffeeItemQuantityAction(coffeeId: string) {
     payload: {
       coffeeId,
     },
+  }
+}
+
+export function removeAllCoffeeItemFromCartAction() {
+  return {
+    type: 'REMOVE_ALL_COFFEE_FROM_CART',
   }
 }

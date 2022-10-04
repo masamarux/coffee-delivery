@@ -37,6 +37,7 @@ export function coffeesReducer(state: CoffeeState, action: any) {
         draft.coffeeItemsCart?.splice(index, 1)
       })
     }
+
     case ActionTypes.INCREMENT_COFFEE_QUANTITY: {
       const index = state.coffeeItemsCart?.findIndex((coffee) => {
         return coffee.id === action.payload.coffeeId
@@ -71,6 +72,11 @@ export function coffeesReducer(state: CoffeeState, action: any) {
         }
       })
     }
+
+    case ActionTypes.REMOVE_ALL_COFFEE_FROM_CART:
+      return produce(state, (draft) => {
+        draft.coffeeItemsCart = []
+      })
 
     default:
       return state
