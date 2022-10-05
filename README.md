@@ -17,9 +17,9 @@ Este é Coffee Delivery, você pode acessá-lo por este [link](https://coffee-de
 
 ### Além do que foi exigido, decidi adicionar mais algumas pequenas funcionalidades como:
 
-- Pedir o CEP do usuário na primeira visita no site para mostrar sua localização no header;
-- Uso da api ViaCEP para buscar dados da localidade e disponibilizar no formulário facilitando a experiência do usuário;
-- Máscaras para o input de CEP;
+ - Pedir o CEP do usuário na primeira visita no site para mostrar sua localização no header;
+ - Uso da api ViaCEP para buscar dados da localidade e disponibilizar no formulário facilitando a experiência do usuário;
+ - Máscaras para o input de CEP.
 
 ## Como iniciar o projeto
 
