@@ -48,7 +48,9 @@ export function Header() {
           <DialogRoot open={modalOpen} onOpenChange={changeModalOpen}>
             <DialogTrigger>
               <MapPin size={24} weight="fill" />
-              {address?.city !== '' && `${address?.city}, ${address?.state}`}
+              {address?.city !== '' &&
+                address?.city !== undefined &&
+                `${address?.city}, ${address?.state}`}
             </DialogTrigger>
             <Modal />
           </DialogRoot>

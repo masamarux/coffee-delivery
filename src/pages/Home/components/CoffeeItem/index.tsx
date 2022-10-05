@@ -2,10 +2,8 @@ import { ShoppingCart } from 'phosphor-react'
 import { useContext, useState } from 'react'
 
 import { Button } from '../../../../components/Button'
-import {
-  CoffeeContext,
-  CoffeeItem as CoffeeItemInterface,
-} from '../../../../contexts/CoffeeContext'
+import { CoffeeContext } from '../../../../contexts/CoffeeContext'
+import { CoffeeItem as CoffeeItemInterface } from '../../../../reducers/coffee/reducer'
 import { SelectQuantity } from '../SelectQuantity'
 import {
   CoffeeItemContainer,

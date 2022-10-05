@@ -15,7 +15,7 @@ import {
 
 export function Modal() {
   const [cep, setCep] = useState('')
-  const { changeAddress, changeModalOpen, address } = useContext(CoffeeContext)
+  const { changeAddress, changeModalOpen } = useContext(CoffeeContext)
 
   async function handleConfirmButton() {
     const cepData = await getCEP(cep)
