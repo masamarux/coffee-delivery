@@ -88,12 +88,16 @@ export function Checkout() {
         return acc + coffeeItemCart.price * coffeeItemCart.quantity
       }, 0)
     : 0
-  const fretePrice = 3.5
 
   const complemento = watch('complement')
   const complementoHasValue = !!complemento
 
   const cep = watch('cep')
+
+  const notHasAnyCoffeeItemInCart = !(
+    coffeeItemsCart && coffeeItemsCart.length > 0
+  )
+  const fretePrice = notHasAnyCoffeeItemInCart ? 0 : 3.5
 
   const handleCreatePayment: SubmitHandler<FieldValues> = (data) => {
     removeAllCoffeeItemFromCart()
@@ -142,13 +146,24 @@ export function Checkout() {
             description="Informe o endereço onde deseja receber seu pedido"
           />
           <InputsContainer>
-            <Input
-              inputSize="12.5rem"
-              type="text"
-              placeholder="CEP"
-              required
-              hasErrors={!!errors.cep}
-              {...register('cep')}
+            <Controller
+              name="cep"
+              defaultValue=""
+              control={control}
+              render={({ field: { value, onBlur, onChange, ref } }) => (
+                <Input
+                  inputSize="12.5rem"
+                  type="text"
+                  placeholder="CEP"
+                  required
+                  isCepMask
+                  hasErrors={!!errors.cep}
+                  value={value}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  ref={ref}
+                />
+              )}
             />
             <Input
               inputSize="100%"
@@ -198,6 +213,7 @@ export function Checkout() {
                 placeholder="UF"
                 required
                 hasErrors={!!errors.state}
+                maxLength={2}
                 {...register('state')}
               />
             </div>
@@ -283,7 +299,11 @@ export function Checkout() {
               </span>
             </ItemTotalContainer>
             <ButtonConfirmContainer>
-              <Button type="submit" variant="secondary-dark">
+              <Button
+                type="submit"
+                variant="secondary-dark"
+                disabled={notHasAnyCoffeeItemInCart}
+              >
                 Finalizar Pedido
               </Button>
             </ButtonConfirmContainer>

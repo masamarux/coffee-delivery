@@ -12,9 +12,16 @@ export interface CoffeeItem {
   quantity: number
 }
 
+export interface Address {
+  city: string
+  state: string
+}
+
 interface CoffeeState {
   coffeeItems: CoffeeItem[]
   coffeeItemsCart: CoffeeItem[] | null
+  address?: Address
+  modalOpen: boolean
 }
 
 export function coffeesReducer(state: CoffeeState, action: any) {
@@ -76,6 +83,16 @@ export function coffeesReducer(state: CoffeeState, action: any) {
     case ActionTypes.REMOVE_ALL_COFFEE_FROM_CART:
       return produce(state, (draft) => {
         draft.coffeeItemsCart = []
+      })
+
+    case ActionTypes.CHANGE_ADDRESS:
+      return produce(state, (draft) => {
+        draft.address = action.payload.address
+      })
+
+    case ActionTypes.CHANGE_MODAL_OPEN:
+      return produce(state, (draft) => {
+        draft.modalOpen = action.payload.modalOpen
       })
 
     default:

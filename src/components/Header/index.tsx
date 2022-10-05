@@ -1,20 +1,23 @@
 import { ShoppingCart, MapPin } from 'phosphor-react'
+import { useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { CoffeeContext } from '../../contexts/CoffeeContext'
 
+import { Modal } from '../Modal'
 import { Button } from '../Button'
 
 import {
   HeaderContainer,
-  LocationContainer,
   CartQuantity,
   ButtonContainer,
+  DialogRoot,
+  DialogTrigger,
 } from './styles'
 import logoImg from '../../assets/logo-img.svg'
-import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
-import { CoffeeContext } from '../../contexts/CoffeeContext'
 
 export function Header() {
-  const { coffeeItemsCart } = useContext(CoffeeContext)
+  const { coffeeItemsCart, address, modalOpen, changeModalOpen } =
+    useContext(CoffeeContext)
   const navigate = useNavigate()
 
   function handleNavigateToCheckout() {
@@ -25,31 +28,45 @@ export function Header() {
     navigate('/')
   }
 
+  useEffect(() => {
+    if (address === undefined) {
+      changeModalOpen(true)
+    }
+  }, [changeModalOpen, address])
+
   return (
-    <HeaderContainer>
-      <button onClick={handleNavigateToHome}>
-        <img
-          src={logoImg}
-          alt="Logo do site com um copo de café e um foguete por dentro"
-        />
-      </button>
+    <>
+      <HeaderContainer>
+        <button onClick={handleNavigateToHome}>
+          <img
+            src={logoImg}
+            alt="Logo do site com um copo de café e um foguete por dentro"
+          />
+        </button>
 
-      <div>
-        <LocationContainer>
-          <MapPin size={24} weight="fill" />
-          Marechal Deodoro, AL
-        </LocationContainer>
+        <div>
+          <DialogRoot open={modalOpen} onOpenChange={changeModalOpen}>
+            <DialogTrigger>
+              <MapPin size={24} weight="fill" />
+              {address?.city !== '' && `${address?.city}, ${address?.state}`}
+            </DialogTrigger>
+            <Modal />
+          </DialogRoot>
 
-        <ButtonContainer>
-          <Button variant="secondary-light" onClick={handleNavigateToCheckout}>
-            {coffeeItemsCart && coffeeItemsCart.length > 0 && (
-              <CartQuantity>{coffeeItemsCart.length}</CartQuantity>
-            )}
+          <ButtonContainer>
+            <Button
+              variant="secondary-light"
+              onClick={handleNavigateToCheckout}
+            >
+              {coffeeItemsCart && coffeeItemsCart.length > 0 && (
+                <CartQuantity>{coffeeItemsCart.length}</CartQuantity>
+              )}
 
-            <ShoppingCart size={24} weight="fill" />
-          </Button>
-        </ButtonContainer>
-      </div>
-    </HeaderContainer>
+              <ShoppingCart size={24} weight="fill" />
+            </Button>
+          </ButtonContainer>
+        </div>
+      </HeaderContainer>
+    </>
   )
 }

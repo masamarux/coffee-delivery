@@ -41,4 +41,10 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
       props.theme[BUTTON_VARIANT[props.variant][2]]};
     color: ${(props) => props.theme[BUTTON_VARIANT[props.variant][3]]};
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: ${(props) => props.theme['gray-500']};
+    color: ${(props) => props.theme['gray-100']};
+  }
 `

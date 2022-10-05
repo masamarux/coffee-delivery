@@ -1,4 +1,4 @@
-import { CoffeeItem } from './reducer'
+import { Address, CoffeeItem } from './reducer'
 
 export enum ActionTypes {
   ADD_COFFEE_TO_CART = 'ADD_COFFEE_TO_CART',
@@ -6,6 +6,8 @@ export enum ActionTypes {
   INCREMENT_COFFEE_QUANTITY = 'INCREMENT_COFFEE_QUANTITY',
   DECREMENT_COFFEE_QUANTITY = 'DECREMENT_COFFEE_QUANTITY',
   REMOVE_ALL_COFFEE_FROM_CART = 'REMOVE_ALL_COFFEE_FROM_CART',
+  CHANGE_ADDRESS = 'CHANGE_ADDRESS',
+  CHANGE_MODAL_OPEN = 'CHANGE_MODAL_OPEN',
 }
 
 export function addCoffeeItemToCartAction(coffeeItem: CoffeeItem) {
@@ -47,5 +49,23 @@ export function decrementCoffeeItemQuantityAction(coffeeId: string) {
 export function removeAllCoffeeItemFromCartAction() {
   return {
     type: 'REMOVE_ALL_COFFEE_FROM_CART',
+  }
+}
+
+export function changeAddressAction(address: Address) {
+  return {
+    type: 'CHANGE_ADDRESS',
+    payload: {
+      address,
+    },
+  }
+}
+
+export function changeModalOpenAction(modalOpen: boolean) {
+  return {
+    type: 'CHANGE_MODAL_OPEN',
+    payload: {
+      modalOpen,
+    },
   }
 }

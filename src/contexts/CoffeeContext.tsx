@@ -8,17 +8,23 @@ import {
   incrementCoffeeItemQuantityAction,
   removeCoffeeItemFromCartAction,
   removeAllCoffeeItemFromCartAction,
+  changeAddressAction,
+  changeModalOpenAction,
 } from '../reducers/coffee/actions'
-import { CoffeeItem, coffeesReducer } from '../reducers/coffee/reducer'
+import { CoffeeItem, coffeesReducer, Address } from '../reducers/coffee/reducer'
 
 interface CoffeeContextType {
   coffeeItems: CoffeeItem[]
   coffeeItemsCart: CoffeeItem[] | null
+  address?: Address
+  modalOpen: boolean
   addCoffeeItemToCart: (coffeeItem: CoffeeItem) => void
   removeCoffeeItemFromCart: (coffeeItem: CoffeeItem) => void
   incrementCoffeeItemQuantity: (coffeeId: string) => void
   decrementCoffeeItemQuantity: (coffeeId: string) => void
   removeAllCoffeeItemFromCart: () => void
+  changeAddress: (address: Address) => void
+  changeModalOpen: (modalOpen: boolean) => void
 }
 
 export const CoffeeContext = createContext({} as CoffeeContextType)
@@ -40,6 +46,8 @@ export function CoffeeContextProvider({
           }))
         : [],
       coffeeItemsCart: [],
+      address: undefined,
+      modalOpen: false,
     },
     () => {
       const storedCoffees = localStorage.getItem(
@@ -58,11 +66,13 @@ export function CoffeeContextProvider({
             }))
           : [],
         coffeeItemsCart: [],
+        address: undefined,
+        modalOpen: false,
       }
     },
   )
 
-  const { coffeeItems, coffeeItemsCart } = coffeeState
+  const { coffeeItems, coffeeItemsCart, address, modalOpen } = coffeeState
 
   function addCoffeeItemToCart(coffeeItem: CoffeeItem) {
     dispatch(addCoffeeItemToCartAction(coffeeItem))
@@ -84,6 +94,14 @@ export function CoffeeContextProvider({
     dispatch(decrementCoffeeItemQuantityAction(coffeeId))
   }
 
+  function changeAddress(address: Address) {
+    dispatch(changeAddressAction(address))
+  }
+
+  function changeModalOpen(modalOpen: boolean) {
+    dispatch(changeModalOpenAction(modalOpen))
+  }
+
   useEffect(() => {
     const stateJSON = JSON.stringify(coffeeState)
 
@@ -93,13 +111,17 @@ export function CoffeeContextProvider({
   return (
     <CoffeeContext.Provider
       value={{
+        address,
         coffeeItems,
         coffeeItemsCart,
+        modalOpen,
         addCoffeeItemToCart,
         removeCoffeeItemFromCart,
         incrementCoffeeItemQuantity,
         decrementCoffeeItemQuantity,
         removeAllCoffeeItemFromCart,
+        changeAddress,
+        changeModalOpen,
       }}
     >
       {children}
